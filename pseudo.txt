@@ -1,0 +1,29 @@
+Part 1
+/* Test light sensor values for black and white */
+while (!black)
+	move forward (7cm)
+
+motorB = 0
+motorC
+wait1Msec (1000)
+
+
+
+part 2
+
+move forward
+
+/*Check output of ultrasonic sensor
+  Question what does the asteroid belt look like*/
+ultrasonic sensor and wait for the peak value of the asteroid
+
+Convert ultrasound data to a distance
+
+Move forward by half a distance for each data
+
+Move forward full power by 15 cm.
+
+
+part 3
+
+https://github.com/AldrichW/UTEK2014.git
