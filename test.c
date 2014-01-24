@@ -26,6 +26,5 @@ task main(){
 		motor[motorC] = 80;
 		wait1Msec(2000);
 
-		motor[B] = 100;
 
 }
