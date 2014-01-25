@@ -21,12 +21,10 @@ void MoveForward (){
 
 /* Black is less than 25*/
 	while (sensorValue[lightSensor] > BLACKCOLOR){
-		motor[motorB] = 50;
-		motor[motorC] = 50;
+		setMotor(50);
 	}
 	//found BLACK
-	motor[motorB] = 0;
-	motor[motorC] = 0;
+	setMotor(0);
 	wait1Msec(1000);
 }
 
@@ -45,13 +43,11 @@ int ReadEncoding (){
 	     	encodingArr[i] = 0;
 	   }
 	   /* calibrate to 7 cm*/
-	   motor[motorB] = 50;
-	   motor[motorC] = 50;
+	   setMotor(50);
 	   wait1Msec(1000);
 	   i++;
   }
-  motor[motorB] = 0;
-	motor[motorC] = 0;
+	setMotor(0);
 
   i = 0;
   int increment = 8;
@@ -68,24 +64,20 @@ int ReadEncoding (){
 /*part 2 */
 
 void DodgeAsteroid(){
-	int
+
 	while (SensorValue(sonarSensor)>=50){
 
-	 	 motor[motorB] = 50;
-	   motor[motorC] = 50;
+		setMotor(50);
 	}
 	while (SensorValue(sonarSensor) >= 25){
 	    nxtDisplayCenteredTextLine(2, "%d", SensorValue[sonarSensor]);
-			motor[motorB] = 25;
-		  motor[motorC] = 25;
+			setMotor(25);
   }
   while (SensorValue(sonarSensor) >= 10){
   		nxtDisplayCenteredTextLine(2, "%d", SensorValue[sonarSensor]);
-			motor[motorB] = 10;
-		  motor[motorC] = 10;
+			setMotor(10);
   }
-		  motor[motorB] = 0;
- 		  motor[motorC] = 0;
+	setMotor(0);
 
  	int oldValue = 0;
  	int newValue = 0;
@@ -98,12 +90,10 @@ void DodgeAsteroid(){
 
 	}
 
- 	motor[motorB] = 100;
- 	motor[motorC] = 100;
+	setMotor(100);
 
  	wait1Msec(1500); // Hardcode time it takes to drive through the obstacle
- 	motor[motorB] = 0;
- 	motor[motorC] = 0;
+	setMotor(0);
 
  	return;
 }
