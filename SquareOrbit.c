@@ -1,6 +1,6 @@
 void setMotor(short value){
 	motor[motorB] = -value;
-	motor[motorC] = -value;
+	motor[motorC] = -value-1;
 
 }
 
@@ -23,6 +23,7 @@ task main()
 			setMotor(50); // 50 is 22cm/s, square each side should be 50 cm
 			wait1Msec(2000);
 			setMotor(0);
+			wait1Msec(500);
 		}
 
 }

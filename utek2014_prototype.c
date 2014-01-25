@@ -15,7 +15,7 @@ UTEK 2014 - Senior Design - Traversing the planets
 
 void setMotor(short value){
 	motor[motorB] = -value;
-	motor[motorC] = -value;
+	motor[motorC] = -value-1;
 
 }
 
@@ -76,15 +76,18 @@ int ReadEncoding (){
 
 void DodgeAsteroid(){
 
-  while (SensorValue(sonarSensor) >= 3){
+  while (SensorValue(sonarSensor) >= 10){
   		nxtDisplayCenteredTextLine(2, "%d", SensorValue[sonarSensor]);
 			setMotor(10);
+			wait1Msec(50);
   }
 	setMotor(0);
+	wait1Msec(1000);
 	int currentDistance = SensorValue(sonarSensor);
 
- 	while(SensorValue(sonarSensor) - currentDistance < 10){
-
+ 	while(SensorValue(sonarSensor)< 30){
+ 		nxtDisplayCenteredTextLine(1, "%d", currentDistance);
+		nxtDisplayCenteredTextLine(2, "%d", SensorValue[sonarSensor]);
 
 	}
  	// Book it through the asteroid
@@ -103,9 +106,9 @@ task main()
 	MoveForward();
   encodedValue = ReadEncoding();
 
-  nxtDisplayCenteredTextLine(2, "%d", encodedValue);
+//  nxtDisplayCenteredTextLine(2, "%d", encodedValue);
 
-	wait1Msec(2000);
+//	wait1Msec(1000);
 	DodgeAsteroid();
 
 }
