@@ -117,7 +117,6 @@ void OrbitPlanet(int planetValue)
 		// Do the square orbit
 		SquareOrbit(1);
 
-
 	}
 	else if (planetValue == 9){
 
