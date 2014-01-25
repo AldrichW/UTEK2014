@@ -10,6 +10,7 @@ UTEK 2014 - Senior Design - Traversing the planets
 
 #pragma config(Sensor, S3,     lightSensor,         sensorLightActive)
 #pragma config(Sensor, S4,     sonarSensor,         sensorSONAR)
+#define BLACK_COLOUR 25
 
 void setMotor(value){
 	motor[motorB] = -value;
@@ -20,7 +21,7 @@ void setMotor(value){
 void MoveForward (){
 
 /* Black is less than 25*/
-	while (sensorValue[lightSensor] > BLACKCOLOR){
+	while (sensorValue[lightSensor] > BLACK_COLOUR){
 		setMotor(50);
 	}
 	//found BLACK
@@ -36,7 +37,7 @@ int ReadEncoding (){
 
 	while (i<4){
 		 nxtDisplayCenteredTextLine(2, "%d", SensorValue[lightSensor]);
-	   if (sensorValue[lightSensor]<=BLACKCOLOR){
+	   if (sensorValue[lightSensor]<=BLACK_COLOUR + 10){
 	   		encodingArr[i] = 1;
 	   }
 	   else{
@@ -44,7 +45,7 @@ int ReadEncoding (){
 	   }
 	   /* calibrate to 7 cm*/
 	   setMotor(50);
-	   wait1Msec(1000);
+	   wait1Msec(225);
 	   i++;
   }
 	setMotor(0);
@@ -65,34 +66,22 @@ int ReadEncoding (){
 
 void DodgeAsteroid(){
 
-	while (SensorValue(sonarSensor)>=50){
-
-		setMotor(50);
-	}
-	while (SensorValue(sonarSensor) >= 25){
-	    nxtDisplayCenteredTextLine(2, "%d", SensorValue[sonarSensor]);
-			setMotor(25);
-  }
-  while (SensorValue(sonarSensor) >= 10){
+  while (SensorValue(sonarSensor) >= 3){
   		nxtDisplayCenteredTextLine(2, "%d", SensorValue[sonarSensor]);
 			setMotor(10);
   }
 	setMotor(0);
 
- 	int oldValue = 0;
- 	int newValue = 0;
+	currentDistance = SensorValue(sonarSensor);
 
- 	// Want newValue to be very big and oldValue to be very small before we go
- 	while(newValue - oldValue < 10){
+ 	while(sensorValue(sonarSensor) - currentDistance < 10){
 
- 		oldValue = newValue;
- 		newValue = SensorValue(sonarSensor);
 
 	}
+ 	// Book it through the asteroid
+	setMotor(50);
 
-	setMotor(100);
-
- 	wait1Msec(1500); // Hardcode time it takes to drive through the obstacle
+ 	wait1Msec(1000); // Hardcode time it takes to drive through the obstacle
 	setMotor(0);
 
  	return;
@@ -104,5 +93,6 @@ task main()
 
 	MoveForward();
 	encodedValue = ReadEncoding();
+	DodgeAsteroid();
 
 }
