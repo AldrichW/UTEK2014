@@ -9,6 +9,13 @@ UTEK 2014 - Senior Design - Traversing the planets
 	Robot must go through an asteroid belt (oscillating back and forth 180 degrees)
 	Robot must go to corresponding planet and orbit once.
 */
+void SearchSaturn();
+
+void setMotor(short value){
+	motor[motorB] = -value;
+	motor[motorC] = -value-1;
+
+}
 
 void Rotate90(int value){
 
@@ -21,11 +28,6 @@ void Rotate90(int value){
 /* Part 0*/
 
 
-void setMotor(short value){
-	motor[motorB] = -value;
-	motor[motorC] = -value-1;
-
-}
 
 void MoveForward (){
 
@@ -104,8 +106,49 @@ void DodgeAsteroid(){
 
  	return;
 }
+void SquareOrbit(int clockwise)
+{
 
+		Rotate90(-1 * clockwise);
+		// Go half distance
+		setMotor(50); // 50 is 22cm/s, square each side should be 50 cm
+		wait1Msec(1000);
+		setMotor(0);
+		wait1Msec(200);
+			int i = 0;
+		for( i = 0; i < 5; i ++){
+			Rotate90(1 * clockwise);
+			// Go full distance
+			setMotor(45); // 50 is 22cm/s, square each side should be 50 cm
+			wait1Msec(2000);
+			setMotor(0);
+			wait1Msec(250);
+		}
 
+}
+
+void PlanetSearch(int clockwise)
+{
+			// Rotate 90 degrees, then start sweeping the sonar sensor
+
+		Rotate90(1 * clockwise);
+		setMotor(0);
+		wait1Msec(100);
+		// Rotate in the other direction on spot
+		motor[motorB] = -10 * clockwise;
+		motor[motorC] = 10* clockwise;
+
+		while(SensorValue[sonarSensor] > 60){
+				// Keep rotating
+		}
+		setMotor(0);
+		// Now pointing right at the planet, approach the planet
+		while(SensorValue[sonarSensor] > 15){
+			setMotor(50);
+		}
+		setMotor(0);
+
+}
 /* Part 3*/
 
 void OrbitPlanet(int planetValue)
@@ -113,18 +156,19 @@ void OrbitPlanet(int planetValue)
 	if (planetValue == 13){
 		// Find the planet
 		PlanetSearch(1);
-
+		wait1Msec(100); //// REMOVE THIS AFTER
 		// Do the square orbit
-		SquareOrbit(1);
+		SquareOrbit(-1);
 
 	}
 	else if (planetValue == 9){
 
 		PlanetSearch(-1);
-		SquareOrbit(-1);
+				wait1Msec(100); //// REMOVE THIS AFTER
+		SquareOrbit(1);
 	}
 	else{
-		SearchSaturn(1);
+		SearchSaturn();
 		motor[motorB] = -20;
 		motor[motorC] = 20;
 		wait1Msec(2000);
@@ -142,10 +186,10 @@ void SearchSaturn()
 		setMotor(0);
 
 		// Rotate in the other direction on spot
-		motor[motorB] = -20;
-		motor[motorC] = 20;
+		motor[motorB] = 20;
+		motor[motorC] = -20;
 
-		while(SensorValue[sonarSensor] > 60){
+		while(SensorValue[sonarSensor] > 70){
 				// Keep rotating
 		}
 		setMotor(0);
@@ -153,61 +197,20 @@ void SearchSaturn()
 }
 
 
-void PlanetSearch()(int clockwise)
-{
-			// Rotate 90 degrees, then start sweeping the sonar sensor
-
-		Rotate90(1 * clockwise);
-		setMotor(0);
-
-		// Rotate in the other direction on spot
-		motor[motorB] = -20 * clockwise;
-		motor[motorC] = 20* clockwise;
-
-		while(SensorValue[sonarSensor] > 60){
-				// Keep rotating
-		}
-		setMotor(0);
-		// Now pointing right at the planet, approach the planet
-		while(SensorValue[sonarSensor] > 20){
-			setMotor(50);
-		}
-		setMotor(0);
-
-}
 
 
-void SquareOrbit(int clockwise)
-{
 
-		Rotate90(-1 * clockwise);
-		// Go half distance
-		setMotor(50); // 50 is 22cm/s, square each side should be 50 cm
-		wait1Msec(100);
-		setMotor(0);
-			int i = 0;
-		for( i = 0; i < 5; i ++){
-			Rotate90(1 * clockwise);
-			// Go full distance
-			setMotor(50); // 50 is 22cm/s, square each side should be 50 cm
-			wait1Msec(2000);
-			setMotor(0);
-			wait1Msec(500);
-		}
-
-}
 
 
 task main()
 {
-	int encodedValue;
+	int encodedValue=9;
 
 	MoveForward();
   encodedValue = ReadEncoding();
 
-//  nxtDisplayCenteredTextLine(2, "%d", encodedValue);
-
-//	wait1Msec(1000);
+  nxtDisplayCenteredTextLine(2, "%d", encodedValue);
+	wait1Msec(1000);
 	DodgeAsteroid();
 
 	OrbitPlanet(encodedValue);
