@@ -18,7 +18,7 @@ void Rotate90(int value){
 task main()
 {
 		// Rotate 90 degrees, then start sweeping the sonar sensor
-	  clockwise = 1;
+	  int clockwise = 1;
 		Rotate90(1 * clockwise);
 		setMotor(0);
 
@@ -31,7 +31,7 @@ task main()
 		}
 		setMotor(0);
 		// Now pointing right at the planet, approach the planet
-		while(SensorValue[sonarSensor] > 20){
+		while(SensorValue[sonarSensor] > 15){
 			setMotor(50);
 		}
 		setMotor(0);

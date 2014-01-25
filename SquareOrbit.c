@@ -8,14 +8,15 @@ void setMotor(short value){
 void Rotate90(int value){
 
 		motor[motorB] = 50;
-		motor[motorC] = -50;
+		motor[motorC] = -50-1;
 		wait1Msec(425);
 		setMotor(0);
+		wait1Msec(100);
 }
 
 task main()
 {
-	clockwise = 1;
+	  int clockwise = 1;
 
 		Rotate90(-1 * clockwise);
 		// Go half distance
