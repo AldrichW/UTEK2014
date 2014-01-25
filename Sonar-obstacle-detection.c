@@ -25,10 +25,11 @@ task main()
   while(1){
 		int distance_in_cm = 20;   // Create variable 'distance_in_cm' and initialize it to 20(cm).
 
-		 nxtDisplayTextLine(2, "%d", SensorValue(sonarSensor));
+		 nxtDisplayTextLine(1, "%d", SensorValue(sonarSensor));
 
 	   while(SensorValue[sonarSensor] > distance_in_cm)   // While the Sonar Sensor readings are less than the specified, 'distance_in_cm':
 	   {
+	      nxtDisplayTextLine(1, "%d", SensorValue(sonarSensor));
 	      motor[motorB] = 75;                     // Motor B is run at a 75 power level
 	      motor[motorC] = 75;                     // Motor C is run at a 75 power level
 	   }
