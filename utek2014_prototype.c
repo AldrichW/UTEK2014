@@ -1,3 +1,7 @@
+#pragma config(Sensor, S3,     lightSensor,         sensorLightActive)
+#pragma config(Sensor, S4,     sonarSensor,         sensorSONAR)
+#define BLACK_COLOUR 38
+
 /*
 UTEK 2014 - Senior Design - Traversing the planets
 	Have our robot read binary encoding on the ground to decided which planet
@@ -8,11 +12,8 @@ UTEK 2014 - Senior Design - Traversing the planets
 
 /* Part 0*/
 
-#pragma config(Sensor, S3,     lightSensor,         sensorLightActive)
-#pragma config(Sensor, S4,     sonarSensor,         sensorSONAR)
-#define BLACK_COLOUR 25
 
-void setMotor(value){
+void setMotor(short value){
 	motor[motorB] = -value;
 	motor[motorC] = -value;
 
@@ -21,8 +22,12 @@ void setMotor(value){
 void MoveForward (){
 
 /* Black is less than 25*/
-	while (sensorValue[lightSensor] > BLACK_COLOUR){
+nxtDisplayCenteredTextLine(2, "%d", SensorValue[lightSensor]);
+
+	while (SensorValue[lightSensor] > BLACK_COLOUR){
+		nxtDisplayCenteredTextLine(2, "%d", SensorValue[lightSensor]);
 		setMotor(50);
+		wait1Msec(50);
 	}
 	//found BLACK
 	setMotor(0);
@@ -37,15 +42,19 @@ int ReadEncoding (){
 
 	while (i<4){
 		 nxtDisplayCenteredTextLine(2, "%d", SensorValue[lightSensor]);
-	   if (sensorValue[lightSensor]<=BLACK_COLOUR + 10){
+	   if (SensorValue[lightSensor]<=BLACK_COLOUR){
 	   		encodingArr[i] = 1;
 	   }
 	   else{
 	     	encodingArr[i] = 0;
 	   }
+	   if(i!=3){
 	   /* calibrate to 7 cm*/
-	   setMotor(50);
-	   wait1Msec(225);
+	  	 setMotor(50);
+	   	 wait1Msec(330);
+	   }
+	   setMotor(0);
+	   wait1Msec(1000);
 	   i++;
   }
 	setMotor(0);
@@ -59,6 +68,7 @@ int ReadEncoding (){
   	increment = increment/2;
   	i++;
   }
+  nxtDisplayCenteredTextLine(2, "%d", encodedValue);
   return (encodedValue);
 }
 
@@ -71,10 +81,9 @@ void DodgeAsteroid(){
 			setMotor(10);
   }
 	setMotor(0);
+	int currentDistance = SensorValue(sonarSensor);
 
-	currentDistance = SensorValue(sonarSensor);
-
- 	while(sensorValue(sonarSensor) - currentDistance < 10){
+ 	while(SensorValue(sonarSensor) - currentDistance < 10){
 
 
 	}
@@ -92,7 +101,11 @@ task main()
 	int encodedValue;
 
 	MoveForward();
-	encodedValue = ReadEncoding();
+  encodedValue = ReadEncoding();
+
+  nxtDisplayCenteredTextLine(2, "%d", encodedValue);
+
+	wait1Msec(2000);
 	DodgeAsteroid();
 
 }
