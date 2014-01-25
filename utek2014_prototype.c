@@ -58,7 +58,6 @@ int ReadEncoding (){
 	   i++;
   }
 	setMotor(0);
-
   i = 0;
   int increment = 8;
   while (i<4){
@@ -88,7 +87,6 @@ void DodgeAsteroid(){
  	while(SensorValue(sonarSensor)< 30){
  		nxtDisplayCenteredTextLine(1, "%d", currentDistance);
 		nxtDisplayCenteredTextLine(2, "%d", SensorValue[sonarSensor]);
-
 	}
  	// Book it through the asteroid
 	setMotor(50);
