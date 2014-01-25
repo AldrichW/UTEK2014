@@ -1,6 +1,8 @@
+#pragma config(Sensor, S4,     sonarSensor,         sensorSONAR)
+
 void setMotor(short value){
 	motor[motorB] = -value;
-	motor[motorC] = -value;
+	motor[motorC] = -value -1;
 
 }
 
