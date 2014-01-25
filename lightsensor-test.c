@@ -31,10 +31,10 @@ task main()
 		   wait1Msec(50);                         // The program waits 50 milliseconds to initialize the light sensor.
 
 		   nxtDisplayTextLine(2, "%d", SensorValue(lightSensor));
-		   while(SensorValue[lightSensor] > 45)   // While the reading is greater than 45 (a light surface):  NOTE- make this less than to detect light surfaces.
+		   while(SensorValue[lightSensor] > 40)   // While the reading is greater than 45 (a light surface):  NOTE- make this less than to detect light surfaces.
 		   {
-		      motor[motorB] = 100;                // Motor C is run at a 100 power level.
-		      motor[motorC] = 100;                // Motor B is run at a 100 power level.
+		      motor[motorB] = -100;                // Motor C is run at a 100 power level.
+		      motor[motorC] = -100;                // Motor B is run at a 100 power level.
 		   }
 
 		   motor[motorB] = 0;                     // Motor C is stopped with a 0 power level.
