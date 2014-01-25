@@ -114,18 +114,71 @@ void OrbitPlanet(int planetValue)
 {
 	if (planetValue == 13){
 		// Find the planet
-
-
+		PlanetSearch(1);
 
 		// Do the square orbit
 		SquareOrbit(1);
 
 
 	}
+	else if (planetValue == 9){
 
-
+		PlanetSearch(-1);
+		SquareOrbit(-1);
+	}
+	else{
+		SearchSaturn(1);
+		motor[motorB] = -20;
+		motor[motorC] = 20;
+		wait1Msec(2000);
+		PlanetSearch(1);
+		SquareOrbit(1);
+	}
 
 }
+
+void SearchSaturn()
+{
+		// Rotate 90 degrees, then start sweeping the sonar sensor
+
+		Rotate90(-1);
+		setMotor(0);
+
+		// Rotate in the other direction on spot
+		motor[motorB] = -20;
+		motor[motorC] = 20;
+
+		while(SensorValue[sonarSensor] > 60){
+				// Keep rotating
+		}
+		setMotor(0);
+
+}
+
+
+void PlanetSearch()(int clockwise)
+{
+			// Rotate 90 degrees, then start sweeping the sonar sensor
+
+		Rotate90(1 * clockwise);
+		setMotor(0);
+
+		// Rotate in the other direction on spot
+		motor[motorB] = -20 * clockwise;
+		motor[motorC] = 20* clockwise;
+
+		while(SensorValue[sonarSensor] > 60){
+				// Keep rotating
+		}
+		setMotor(0);
+		// Now pointing right at the planet, approach the planet
+		while(SensorValue[sonarSensor] > 20){
+			setMotor(50);
+		}
+		setMotor(0);
+
+}
+
 
 void SquareOrbit(int clockwise)
 {

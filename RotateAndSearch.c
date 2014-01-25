@@ -16,13 +16,13 @@ void Rotate90(int value){
 task main()
 {
 		// Rotate 90 degrees, then start sweeping the sonar sensor
-
-		Rotate90(-1);
+	  clockwise = 1;
+		Rotate90(1 * clockwise);
 		setMotor(0);
 
 		// Rotate in the other direction on spot
-		motor[motorB] = -20;
-		motor[motorC] = 20;
+		motor[motorB] = -20 * clockwise;
+		motor[motorC] = 20 * clockwise;
 
 		while(SensorValue[sonarSensor] > 60){
 				// Keep rotating
