@@ -13,7 +13,7 @@ void SearchSaturn();
 
 void setMotor(short value){
 	motor[motorB] = -value;
-	motor[motorC] = -value-1;
+	motor[motorC] = -value;
 
 }
 
@@ -91,7 +91,7 @@ void DodgeAsteroid(){
 			wait1Msec(50);
   }
 	setMotor(0);
-	wait1Msec(1000);
+	wait1Msec(100);
 	int currentDistance = SensorValue(sonarSensor);
 
  	while(SensorValue(sonarSensor)< 30){
@@ -169,10 +169,18 @@ void OrbitPlanet(int planetValue)
 	}
 	else{
 		SearchSaturn();
-		motor[motorB] = -20;
-		motor[motorC] = 20;
+		motor[motorB] = 10;
+		motor[motorC] = -10;
 		wait1Msec(2000);
-		PlanetSearch(1);
+			while(SensorValue[sonarSensor] > 60){
+				// Keep rotating
+		}
+		setMotor(0);
+		// Now pointing right at the planet, approach the planet
+		while(SensorValue[sonarSensor] > 15){
+			setMotor(50);
+		}
+		setMotor(0);
 		SquareOrbit(1);
 	}
 
@@ -204,7 +212,7 @@ void SearchSaturn()
 
 task main()
 {
-	int encodedValue=9;
+	int encodedValue=0;
 
 	MoveForward();
   encodedValue = ReadEncoding();
