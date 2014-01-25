@@ -105,7 +105,6 @@ void DodgeAsteroid(){
  	return;
 }
 
-
 /* Part 3*/
 
 void OrbitPlanet(int planetValue)
